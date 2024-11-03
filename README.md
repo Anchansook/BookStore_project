@@ -22,11 +22,12 @@
 ## 📊 데이터베이스 설계 (ERD)
 - <strong>Users</strong>: 사용자 정보 저장
 - <strong>Books</strong>: 책 정보 저장
+- <strong>Books_category</strong>: 책과 카테고리 매핑 정보 저장
 - <strong>Categories</strong>: 책 카테고리
 - <strong>Orders</strong>: 주문 정보 관리
 - <strong>Order_items</strong>: 주문 상품 목록 관리
 - <strong>Reviews</strong>: 리뷰 정보 관리
-<img src="./Bookstore/bookstoreERD.png" />
+<img src="./Bookstore/BookstoreERD.png" />
 
 ## 🪩 API 명세서
 ### DOMAIN : http://localhost:4000
