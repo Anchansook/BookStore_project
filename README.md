@@ -26,7 +26,7 @@
 - <strong>Categories</strong>: 책 카테고리
 - <strong>Orders</strong>: 주문 정보 관리
 - <strong>Order_items</strong>: 주문 상품 목록 관리
-- <strong>Reviews</strong>: 리뷰 정보 관리리
+- <strong>Reviews</strong>: 리뷰 정보 관리
 <img src="./Bookstore/BookstoreERD.png" />
 
 ## 🪩 API 명세서
