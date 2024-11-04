@@ -31,6 +31,8 @@
 
 ## 🪩 API 명세서
 ### DOMAIN : http://localhost:4000
+- ### Auth API
+> - /api/v1/auth
 - ### 유저 API
 > - /api/v1/users
 - ### 책 API
