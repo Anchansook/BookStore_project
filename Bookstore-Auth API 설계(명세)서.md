@@ -213,17 +213,16 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 이메일 인증  
+#### - 이메일 중복 확인  
   
 ##### 설명
 
-클라이언트는 이메일 형식에 맞는 이메일을 입력하여 요청하고, 이미 사용 중인 이메일인지 확인 후 4자리의 인증번호를 해당 이메일로 전송을 합니다.  
-인증번호가 정상적으로 전송이 된다면 성공 응답을 받습니다.  
-만약 중복된 이메일을 입력한다면 중복된 이메일에 해당하는 응답을 받게됩니다.  
-네트워크 에러, 서버 에러, 데이터베이스 에러, 메일 전송 실패가 발생할 수 있습니다.
+클라이언트는 사용할 이메일을 입력하여 요청하고 중복되지 않는 이메일이라면 성공 응답을 받습니다.  
+만약 이메일이 중복된다면 이메일 중복에 해당하는 응답을 받게됩니다.  
+네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : POST  
-- end point : /email-auth  
+- end point : /email-check  
 
 ##### Request
 
@@ -231,12 +230,12 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| userEmail | String | 인증번호를 전송할 사용자의 이메일 | O |
+| userEmail | String | 중복 확인할 사용자의 이메일 | O |
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4000/api/v1/auth/email-auth" \
+curl -v -X POST "http://localhost:4000/api/v1/auth/email-check" \
  -d "userEmail=qwer1234@naver.com" \
 ```
 
@@ -289,111 +288,6 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "DE",
   "message": "Duplicated user email."
-}
-```
-
-**응답 : 실패 (인증번호 전송 실패)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "TF",
-  "message": "Auth number send failed."
-}
-```
-
-**응답 : 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-
-***
-
-#### - 인증번호 확인  
-  
-##### 설명
-
-클라이언트는 사용자 이메일과 인증번호를 입력하여 요청하고, 해당하는 이메일과 인증번호가 서로 일치하는지 확인합니다.  
-일치한다면 성공에 대한 응답을 받습니다.  
-만약 일치하지 않는다면 이메일 인증 실패에 대한 응답을 받습니다.  
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
-
-- method : POST  
-- end point : /email-auth-check  
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| userEmail | String | 인증번호를 확인할 사용자 이메일 | O |
-| authNumber | String | 인증 확인에 사용할 인증번호 | O |
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/v1/auth/email-auth-check" \
- -d "userEmail=qwer1234@naver.com" \
- -d "authNumber=1234"
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
-}
-```
-
-**응답 : 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 : 실패 (이메일 인증 실패)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "EAF",
-  "message": "Email authentication failed."
 }
 ```
 
