@@ -74,36 +74,14 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 : 실패 (데이터 유효성 검사 실패)**
+**응답 : 실패 (존재하지 않는 아이디)**
 ```bash
 HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 : 실패 (중복된 아이디)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DI",
-  "message": "Duplicated user id."
-}
-```
-
-**응답 : 실패 (중복된 전화번호)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DT",
-  "message": "Duplicated user tel number."
+  "code": "NI",
+  "message": "No exist user id."
 }
 ```
 
