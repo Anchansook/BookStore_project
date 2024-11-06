@@ -225,18 +225,38 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 리뷰 작성 *** 여기부터 작성해야 함   
+#### - 리뷰 작성   
   
 ##### 설명
 
-클라이언트의 구매 패턴을 파악하여 그에 맞는 책을 추천해줍니다.   
-만약 파악되는 내용이 없다면 아무런 추천을 하지 않습니다.    
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다. 
+요청 헤더에 Bearer 인증 토큰을 포함하고 평점, 리뷰내용을 입력하여 요청하고 리뷰 등록이 성공적으로 이루어지면 성공에 대한 응답을 받습니다.  
+리뷰 & 평점은 한 사람당 하나만 작성할 수 있습니다.  
+네트워크 에러, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : POST  
-- end point : /recommend-books  
+- end point : /review-write  
 
 ##### Request
+
+##### Header
+|---|:---:|:---:|
+| Authorization | Bearer 토큰 인증 헤더 | O |
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| reviewRating | 평점 | Float | O |
+| reviewContents | 리뷰 내용 | String | X |
+
+###### Example
+```bash
+curl -v -X POST "http://localhost:4000/mypage/order-detail/" \
+ -h "Authorization=Bearer XXXX",
+ -d "reviewRating = 4.4" \
+ -d "reviewContents : '제가 먹어본 케이크 중에 끝내줘요 ..' " \
+ -d "reviewUrl = '[image.png]'" \
+ ```
 
 ##### Response
 
@@ -252,7 +272,6 @@ Content-Type: application/json;charset=UTF-8
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
-| Books[] | String[] | 추천하는 책 리스트 | X |
 
 ###### Example
 
@@ -266,6 +285,39 @@ Content-Type: application/json;charset=UTF-8
   "message": "Success.",
   "accessToken": "${ACCESS_TOKEN}",
   "expiration": "32400"
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "VF",
+  "message": "Validation failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 주문 코드)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NT",
+  "message": "No exist ordercode."
+}
+```
+
+**응답 : 실패 (인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "AF",
+  "message": "Authentication fail."
 }
 ```
 
