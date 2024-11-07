@@ -68,8 +68,10 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "shoppingCart": [
+    {"book_id": "selectedBook1", "title": "책 제목1"},
+    {"book_id": "selectedBook2", "title": "책 제목2"}
+  ]
 }
 ```
 
@@ -139,9 +141,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "SU",
-  "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "message": "Success."
 }
 ```
 

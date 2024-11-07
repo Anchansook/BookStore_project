@@ -26,7 +26,7 @@ Books 모듈은 카테고리 조회 및 추천은 인증 없이 요청할 수 �
 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다. 
 
 - method : GET  
-- end point : /categories-filter  
+- end point : /categories-filter?category-name={categoryName}
 
 ##### Request
 
@@ -34,13 +34,13 @@ Books 모듈은 카테고리 조회 및 추천은 인증 없이 요청할 수 �
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| category-name | String | 책 카테고리 | X |
+| categoryName | String | 책 카테고리 | O |
 
 ###### Example
 
 ```bash
 curl -v -X GET "http://localhost:4000/api/v1/books/categories-filter" \
- -d "category-name=미스테리" \
+ -d "categoryName=미스테리" \
 ```
 
 ##### Response
@@ -69,19 +69,21 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "Books": [
+    { "book_id": "123", "title": "미스테리 도서" },
+    { "book_id": "456", "title": "스릴러 도서" }
+  ]
 }
 ```
 
-**응답 : 실패 (데이터 유효성 검사 실패)**
+**응답 : 실패 (해당되는 카테고리가 없는 책)**
 ```bash
 HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-  "code": "VF",
-  "message": "Validation failed."
+  "code": "BC",
+  "message": "Books without a corresponding category."
 }
 ```
 
@@ -103,11 +105,11 @@ Content-Type: application/json;charset=UTF-8
 ##### 설명
 
 클라이언트는 할인 필터를 선택하여 요청하고 그에 해당되는 응답을 받게 됩니다.   
-만약 해당되는 내용이 없다면 아무런 응답을 받지 않습니다.    
+만약 해당되는 내용이 없다면 아무런 응답을 하지 않습니다.    
 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다. 
 
 - method : GET  
-- end point : /discount-filter  
+- end point : /discount-filter?discount-book={discountBook}  
 
 ##### Request
 
@@ -115,13 +117,13 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| discount | String | 할인 중인 책 | X |
+| discount | String | 할인 중인 책 | O |
 
 ###### Example
 
 ```bash
 curl -v -X GET "http://localhost:4000/api/v1/books/discount-filter" \
- -d "discount=미스테리" \
+ -d "discountBook=" \
 ```
 
 ##### Response
@@ -155,6 +157,17 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
+**응답 : 실패 (존재하지 않는 할인 책)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "ND",
+  "message": "No exist discounting books."
+}
+```
+
 **응답 : 실패 (데이터베이스 에러)**
 ```bash
 HTTP/1.1 500 Internal Server Error
@@ -172,7 +185,7 @@ Content-Type: application/json;charset=UTF-8
   
 ##### 설명
 
-클라이언트의 구매 패턴을 파악하여 그에 맞는 책을 추천해줍니다.   
+클라이언트의 사용자 아이디와 주문 번호를 활용하여 구매 이력을 추천 알고리즘으로 파악하여 그에 맞는 책을 추천해줍니다.   
 만약 파악되는 내용이 없다면 아무런 추천을 하지 않습니다.    
 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다. 
 
@@ -180,6 +193,21 @@ Content-Type: application/json;charset=UTF-8
 - end point : /recommend-books  
 
 ##### Request
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| userId | String | 구매이력을 파악할 사용자의 아이디 | O |
+| orderId | Int | 구매이력을 파악할 사용자의 주문 코드 | O |
+
+###### Example
+
+```bash
+curl -v -X GET "http://localhost:4000/api/v1/books/discount-filter" \
+ -d "userId"= "qwer1234" \
+ -d "orderId"= "1234" \
+```
 
 ##### Response
 
@@ -207,8 +235,32 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "recommendedBooks": [
+    {"book_id": "recommendedBook1", "title": "추천 책 제목1"},
+    {"book_id": "recommendedBook2", "title": "추천 책 제목2"}
+  ]
+}
+```
+
+**응답 : 실패 (존재하지 않는 아이디)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NI",
+  "message": "No exist user id."
+}
+```
+
+**응답 : 실패 (존재하지 않는 주문 코드)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NO",
+  "message": "No exist order_id."
 }
 ```
 
@@ -254,8 +306,7 @@ Content-Type: application/json;charset=UTF-8
 curl -v -X POST "http://localhost:4000/mypage/order-detail/" \
  -h "Authorization=Bearer XXXX",
  -d "reviewRating = 4.4" \
- -d "reviewContents : '제가 먹어본 케이크 중에 끝내줘요 ..' " \
- -d "reviewUrl = '[image.png]'" \
+ -d "reviewContents : '인생책이에요 여러분 꼭 읽어보시길' " 
  ```
 
 ##### Response
@@ -282,9 +333,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "SU",
-  "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "message": "Success."
 }
 ```
 
