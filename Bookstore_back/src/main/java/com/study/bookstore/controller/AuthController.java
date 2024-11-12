@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.study.bookstore.dto.request.auth.EmailCheckRequestDto;
 import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
 import com.study.bookstore.service.AuthService;
@@ -26,6 +27,15 @@ public class AuthController {
 		@RequestBody @Valid IdCheckRequestDto requestBody
 	) {
 		ResponseEntity<ResponseDto> response = authService.idCheck(requestBody);
+		return response;
+	};
+
+	//* 이메일 중복 확인 */
+	@PostMapping("/email-check")
+	public ResponseEntity<ResponseDto> emailCheck(
+		@RequestBody @Valid EmailCheckRequestDto requestBody
+	) {
+		ResponseEntity<ResponseDto> response = authService.emailCheck(requestBody);
 		return response;
 	};
 	

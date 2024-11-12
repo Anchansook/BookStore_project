@@ -3,6 +3,7 @@ package com.study.bookstore.service.implement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.study.bookstore.dto.request.auth.EmailCheckRequestDto;
 import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
 import com.study.bookstore.provider.JwtProvider;
@@ -28,7 +29,7 @@ public class AuthServiceImplement implements AuthService {
 		try {
 
 			boolean isExistedId = usersRepository.existsByUserId(userId);
-			if (!isExistedId) return ResponseDto.duplicatedUserId();
+			if (isExistedId) return ResponseDto.duplicatedUserId();
 
 		} catch(Exception exception) {
 			exception.printStackTrace();
@@ -37,6 +38,26 @@ public class AuthServiceImplement implements AuthService {
 
 		return ResponseDto.success();
 
+	}
+
+	// 이메일 중복 확인
+	@Override
+	public ResponseEntity<ResponseDto> emailCheck(EmailCheckRequestDto dto) {
+
+		String userEmail = dto.getUserEmail();
+
+		try {
+
+			boolean isExistedEmail = usersRepository.existsByUserEmail(userEmail);
+			if (isExistedEmail) return ResponseDto.duplicatedUserEmail();
+
+		} catch(Exception exception) {
+			exception.printStackTrace();
+			return ResponseDto.databaseError();
+		};
+
+		return ResponseDto.success();
+		
 	}
 	
 }
