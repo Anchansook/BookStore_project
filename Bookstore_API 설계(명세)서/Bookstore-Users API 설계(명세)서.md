@@ -69,8 +69,9 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "userId": "qwer1234",
+  "userName": "홍길동",
+  "userEmail": "qwer1234@naver.com"
 }
 ```
 
@@ -168,9 +169,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "SU",
-  "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "message": "Success."
 }
 ```
 
@@ -208,14 +207,14 @@ URL에 유저 아이디를 포함하여 요청하고 회원 삭제가 성공적�
 네트워크 에러, 서버 에러, 인증 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : DELETE  
-- end point : /{userId}  
+- end point : /delete-me
 
 ##### Request
 
 ###### Example
 
 ```bash
-curl -v -X DELETE "http://localhost:4000/api/v1/mypage/user-info/qwer1234" \
+curl -v -X DELETE "http://localhost:4000/api/v1/users/delete-me" \
 ```
 
 ###### Header
@@ -249,9 +248,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "SU",
-  "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expiration": "32400"
+  "message": "Success."
 }
 ```
 

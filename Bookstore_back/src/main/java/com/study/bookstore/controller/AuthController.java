@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.study.bookstore.dto.request.auth.EmailCheckRequestDto;
 import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
+import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
 import com.study.bookstore.service.AuthService;
 
@@ -36,6 +37,15 @@ public class AuthController {
 		@RequestBody @Valid EmailCheckRequestDto requestBody
 	) {
 		ResponseEntity<ResponseDto> response = authService.emailCheck(requestBody);
+		return response;
+	};
+
+	//* 회원가입 */
+	@PostMapping("sign-up")
+	public ResponseEntity<ResponseDto> signUp(
+		@RequestBody @Valid SignUpRequestDto requestBody
+	) {
+		ResponseEntity<ResponseDto> response = authService.signUp(requestBody);
 		return response;
 	};
 	

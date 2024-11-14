@@ -1,11 +1,15 @@
 package com.study.bookstore.service.implement;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.study.bookstore.dto.request.auth.EmailCheckRequestDto;
 import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
+import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
+import com.study.bookstore.entity.UsersEntity;
 import com.study.bookstore.provider.JwtProvider;
 import com.study.bookstore.repository.UsersRepository;
 import com.study.bookstore.service.AuthService;
@@ -19,6 +23,9 @@ public class AuthServiceImplement implements AuthService {
 	private final JwtProvider jwtProvider;
 
 	private final UsersRepository usersRepository;
+
+	// 암호화 방식 주입
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	// 아이디 중복 확인
 	@Override
@@ -50,6 +57,38 @@ public class AuthServiceImplement implements AuthService {
 
 			boolean isExistedEmail = usersRepository.existsByUserEmail(userEmail);
 			if (isExistedEmail) return ResponseDto.duplicatedUserEmail();
+
+		} catch(Exception exception) {
+			exception.printStackTrace();
+			return ResponseDto.databaseError();
+		};
+
+		return ResponseDto.success();
+		
+	}
+
+	// 회원 가입
+	@Override
+	public ResponseEntity<ResponseDto> signUp(SignUpRequestDto dto) {
+
+		String userId = dto.getUserId();
+		String userEmail = dto.getUserEmail();
+		String userPassword = dto.getUserPassword();
+
+		try {
+
+			boolean isExistedId = usersRepository.existsByUserId(userId);
+			if (isExistedId) return ResponseDto.duplicatedUserId();
+
+			boolean isExistedEmail  = usersRepository.existsByUserEmail(userEmail);
+			if (isExistedEmail) return ResponseDto.duplicatedUserEmail();
+
+			// 확인 후 비밀번호 암호화 후 정보 데이터베이스에 저장
+			String encodedPassword = passwordEncoder.encode(userPassword);
+			dto.setUserPassword(encodedPassword);
+
+			UsersEntity usersEntity = new UsersEntity(dto);
+			usersRepository.save(usersEntity);
 
 		} catch(Exception exception) {
 			exception.printStackTrace();
