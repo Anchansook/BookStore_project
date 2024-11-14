@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.study.bookstore.dto.request.auth.EmailCheckRequestDto;
 import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
+import com.study.bookstore.dto.request.auth.SignInRequestDto;
 import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
 import com.study.bookstore.entity.UsersEntity;
@@ -89,6 +90,40 @@ public class AuthServiceImplement implements AuthService {
 
 			UsersEntity usersEntity = new UsersEntity(dto);
 			usersRepository.save(usersEntity);
+
+		} catch(Exception exception) {
+			exception.printStackTrace();
+			return ResponseDto.databaseError();
+		};
+
+		return ResponseDto.success();
+		
+	}
+
+	// 로그인
+	@Override
+	public ResponseEntity<ResponseDto> signIn(SignInRequestDto dto) {
+
+		String userId = dto.getUserId();
+		String userPassword = dto.getUserPassword();
+
+		UsersEntity usersEntity = null;
+
+		String accessToken = null;
+		
+		try {
+
+			usersEntity = usersRepository.findByUserId(userId);
+			if (usersEntity == null) return ResponseDto.signInFailed();
+
+			// 비밀번호 비교
+			String encodedPassword = usersEntity.getUserPassword();
+			boolean isMatched = passwordEncoder.matches(userPassword, encodedPassword);
+			if (!isMatched) return ResponseDto.signInFailed();
+
+			// 확인 성공 시 토큰 생성
+			accessToken = jwtProvider.create(userId);
+			if (accessToken == null) return ResponseDto.tokenCreationFailed();
 
 		} catch(Exception exception) {
 			exception.printStackTrace();

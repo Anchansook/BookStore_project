@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.study.bookstore.dto.request.auth.EmailCheckRequestDto;
 import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
+import com.study.bookstore.dto.request.auth.SignInRequestDto;
 import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
 
@@ -15,5 +16,7 @@ public interface AuthService {
 	ResponseEntity<ResponseDto> emailCheck(EmailCheckRequestDto dto);
 	// 회원 가입
 	ResponseEntity<ResponseDto> signUp(SignUpRequestDto dto);
+	// 로그인
+	ResponseEntity<ResponseDto> signIn(SignInRequestDto dto);
 	
 }

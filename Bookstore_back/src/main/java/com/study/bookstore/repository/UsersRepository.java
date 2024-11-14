@@ -18,6 +18,6 @@ public interface UsersRepository extends JpaRepository<UsersEntity, String> {
 
 	//* 로그인 */
 	// 아이디 존재 여부 확인
-	UsersEntity
+	UsersEntity findByUserId(String userId);
 
 }
