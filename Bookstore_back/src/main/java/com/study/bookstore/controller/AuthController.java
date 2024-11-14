@@ -11,6 +11,7 @@ import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
 import com.study.bookstore.dto.request.auth.SignInRequestDto;
 import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
+import com.study.bookstore.dto.response.auth.SignInResponseDto;
 import com.study.bookstore.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -52,10 +53,10 @@ public class AuthController {
 
 	//* 로그인 */
 	@PostMapping("/sign-in")
-	public ResponseEntity<ResponseDto> signIn(
+	public ResponseEntity<? super SignInResponseDto> signIn(
 		@RequestBody @Valid SignInRequestDto requestBody
 	) {
-		ResponseEntity<ResponseDto> response = authService.signIn(requestBody);
+		ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
 		return response;
 	};
 	

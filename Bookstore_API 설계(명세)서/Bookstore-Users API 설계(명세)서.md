@@ -25,7 +25,7 @@ Users 모듈은 모두 인증이 필요합니다.
 네크워크 에러, 서버 에러, 인증 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : GET  
-- end point : /{userId}  
+- end point : /sign-in-info  
 
 ##### Request
 

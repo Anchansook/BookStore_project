@@ -7,6 +7,7 @@ import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
 import com.study.bookstore.dto.request.auth.SignInRequestDto;
 import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
+import com.study.bookstore.dto.response.auth.SignInResponseDto;
 
 public interface AuthService {
 
@@ -17,6 +18,6 @@ public interface AuthService {
 	// 회원 가입
 	ResponseEntity<ResponseDto> signUp(SignUpRequestDto dto);
 	// 로그인
-	ResponseEntity<ResponseDto> signIn(SignInRequestDto dto);
+	ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto);
 	
 }

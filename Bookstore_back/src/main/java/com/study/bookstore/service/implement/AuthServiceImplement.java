@@ -10,6 +10,7 @@ import com.study.bookstore.dto.request.auth.IdCheckRequestDto;
 import com.study.bookstore.dto.request.auth.SignInRequestDto;
 import com.study.bookstore.dto.request.auth.SignUpRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
+import com.study.bookstore.dto.response.auth.SignInResponseDto;
 import com.study.bookstore.entity.UsersEntity;
 import com.study.bookstore.provider.JwtProvider;
 import com.study.bookstore.repository.UsersRepository;
@@ -102,7 +103,7 @@ public class AuthServiceImplement implements AuthService {
 
 	// 로그인
 	@Override
-	public ResponseEntity<ResponseDto> signIn(SignInRequestDto dto) {
+	public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
 
 		String userId = dto.getUserId();
 		String userPassword = dto.getUserPassword();
@@ -119,7 +120,7 @@ public class AuthServiceImplement implements AuthService {
 			// 비밀번호 비교
 			String encodedPassword = usersEntity.getUserPassword();
 			boolean isMatched = passwordEncoder.matches(userPassword, encodedPassword);
-			if (!isMatched) return ResponseDto.signInFailed();
+		if (!isMatched) return ResponseDto.signInFailed();
 
 			// 확인 성공 시 토큰 생성
 			accessToken = jwtProvider.create(userId);
@@ -130,7 +131,7 @@ public class AuthServiceImplement implements AuthService {
 			return ResponseDto.databaseError();
 		};
 
-		return ResponseDto.success();
+		return SignInResponseDto.success(accessToken);
 		
 	}
 	
