@@ -55,6 +55,11 @@ public class ResponseDto {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
 	};
 
+	public static ResponseEntity<ResponseDto> noExistBookId() {
+		ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_BOOK, ResponseMessage.NO_EXIST_BOOK);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+	};
+
 	public static ResponseEntity<ResponseDto> signInFailed() {
 		ResponseDto responseBody = new ResponseDto(ResponseCode.SIGN_IN_FAIL, ResponseMessage.SIGN_IN_FAIL);
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);

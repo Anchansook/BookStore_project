@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 
 import com.study.bookstore.dto.request.review.PostReviewRequestDto;
 import com.study.bookstore.dto.response.ResponseDto;
+import com.study.bookstore.dto.response.books.GetReviewResponseDto;
 import com.study.bookstore.entity.ReviewEntity;
 import com.study.bookstore.repository.ReviewRepository;
+import com.study.bookstore.repository.resultSet.GetReviewResultSet;
 import com.study.bookstore.service.BookService;
 
 import lombok.RequiredArgsConstructor;

@@ -15,6 +15,7 @@ public interface ResponseCode {
 	String NO_EXIST_CATEGORY = "NC";
 	String NO_EXIST_DISCOUNT = "ND";
 	String NO_EXIST_ORDER_CODE = "NO";
+	String NO_EXIST_BOOK = "NB";
 	
 	String SIGN_IN_FAIL = "SF";
 

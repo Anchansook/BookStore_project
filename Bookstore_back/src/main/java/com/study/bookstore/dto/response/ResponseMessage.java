@@ -15,6 +15,7 @@ public interface ResponseMessage {
 	String NO_EXIST_CATEGORY = "No exist category by book.";
 	String NO_EXIST_DISCOUNT = "No exist discount by book.";
 	String NO_EXIST_ORDER_CODE = "No exist order code.";
+	String NO_EXIST_BOOK = "No exist book id.";
 
 	String SIGN_IN_FAIL = "Sign in failed.";
 

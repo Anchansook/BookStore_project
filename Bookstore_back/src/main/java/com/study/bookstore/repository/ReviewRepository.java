@@ -1,5 +1,7 @@
 package com.study.bookstore.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,7 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Integer> {
 
 	// 사용자가 이미 작성한 리뷰가 있는 지 확인
 	boolean existsByUserId(String userId);
+	// 리뷰 조회
+	List<ReviewEntity> findByReviewIdOrderByReviewIdDesc(Integer reviewId);
 	
 }

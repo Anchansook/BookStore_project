@@ -1,5 +1,8 @@
 package com.study.bookstore.dto.response.books;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import com.study.bookstore.dto.response.ResponseCode;
 import com.study.bookstore.dto.response.ResponseDto;
 import com.study.bookstore.dto.response.ResponseMessage;
@@ -12,22 +15,6 @@ import lombok.Getter;
 @Getter
 public class GetReviewResponseDto extends ResponseDto {
 
-	private String bookName;
-	private Integer reviewRating;
-	private String reviewContent;
-	private String reviewDate;
-	// 가져올 컬럼들 타입 달라서 resultSet 작성함
-
-	private GetReviewResponseDto(GetReviewResultSet resultSet) {
-
-		super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-		this.bookName = resultSet.getBookName();
-		this.reviewRating = resultSet.getReviewRating();
-		this.reviewContent = resultSet.getReviewContent();
-		this.reviewDate = resultSet.getReviewDate();
-
-	};
-
-	public static 
+	// 리뷰 리스트 객체 작성했음
 	
 }
