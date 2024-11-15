@@ -163,8 +163,10 @@ curl -v -X GET "http://localhost:4000/api/v1/books/get-review" \
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
+| bookName | 책 이름 | String | O |
 | reviewRating | 평점 | Float | O |
-| reviewContents | 리뷰 내용 | String | X |
+| reviewContent | 리뷰 내용 | String | X |
+| reviewDate | 리뷰 작성 날짜 | String | O |
 
 ###### Example
 
@@ -175,7 +177,21 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "SU",
-  "message": "Success."
+  "message": "Success.",
+  "reviews": [
+    {
+      "bookName": "어린왕자",
+      "reviewRating": 5,
+      "reviewContent": "정말 감동적인 책이에요.",
+      "reviewDate": "2024-11-15"
+    },
+    {
+      "bookName": "1984",
+      "reviewRating": 5,
+      "reviewContent": "깊이 있는 사회 비판이 돋보입니다.",
+      "reviewDate": "2024-11-15"
+    }
+  ]
 }
 ```
 
@@ -242,8 +258,10 @@ curl -v -X GET "http://localhost:4000/api/v1/books/get-review" \
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
+| bookName | 책 이름 | String | O |
 | reviewRating | 평점 | Float | O |
-| reviewContents | 리뷰 내용 | String | X |
+| reviewContent | 리뷰 내용 | String | X |
+| reviewDate | 리뷰 작성 날짜 | String | O |
 
 ###### Example
 
@@ -254,7 +272,21 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "SU",
-  "message": "Success."
+  "message": "Success.",
+  "reviews": [
+    {
+      "bookName": "어린왕자",
+      "reviewRating": 5,
+      "reviewContent": "정말 감동적인 책이에요.",
+      "reviewDate": "2024-11-15"
+    },
+    {
+      "bookName": "1984",
+      "reviewRating": 5,
+      "reviewContent": "깊이 있는 사회 비판이 돋보입니다.",
+      "reviewDate": "2024-11-15"
+    }
+  ]
 }
 ```
 
