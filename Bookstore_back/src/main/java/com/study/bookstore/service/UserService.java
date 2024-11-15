@@ -13,5 +13,8 @@ public interface UserService {
 
 	// 회원 수정 
 	ResponseEntity<ResponseDto> patchUser(PatchUserRequestDto dto, String userId);
+
+	// 회원 탈퇴
+	ResponseEntity<ResponseDto> deleteUser(String userId);
 	
 }

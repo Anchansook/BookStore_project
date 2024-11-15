@@ -42,18 +42,42 @@ public class UserServiceImplement implements UserService {
 	@Override
 	public ResponseEntity<ResponseDto> patchUser(PatchUserRequestDto dto, String userId) {
 
+		UsersEntity usersEntity = null;
+
 		try {
 
 			String userName = dto.getUserName();
 			String userEmail = dto.getUserEmail();
 
-			UsersEntity usersEntity = usersRepository.findByUserId(userId);
+			usersEntity = usersRepository.findByUserId(userId);
 			if (usersEntity == null) return ResponseDto.noExistUserId();
 
 			usersEntity.setUserName(userName);
 			usersEntity.setUserEmail(userEmail);
 
 			usersRepository.save(usersEntity);
+
+		} catch(Exception exception) {
+			exception.printStackTrace();
+			ResponseDto.databaseError();
+		};
+
+		return ResponseDto.success();
+		
+	}
+
+	// 회원 탈퇴
+	@Override
+	public ResponseEntity<ResponseDto> deleteUser(String userId) {
+
+		UsersEntity usersEntity = null;
+
+		try {
+
+			usersEntity = usersRepository.findByUserId(userId);
+			if (usersEntity == null) return ResponseDto.noExistUserId();
+
+			usersRepository.delete(usersEntity);
 
 		} catch(Exception exception) {
 			exception.printStackTrace();
