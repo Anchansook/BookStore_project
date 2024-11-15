@@ -124,7 +124,7 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 리뷰 불러오기   
+#### - 리뷰 불러오기 (전체)   
   
 ##### 설명
 
@@ -145,7 +145,7 @@ Content-Type: application/json;charset=UTF-8
 
 ###### Example
 ```bash
-curl -v -X POST "http://localhost:4000/api/v1/books/get-review" \
+curl -v -X GET "http://localhost:4000/api/v1/books/get-review" \
  -h "Authorization=Bearer XXXX"
  ```
 
@@ -179,14 +179,82 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
+**응답 실패 (존재하지 않는 주문 코드)**
 ```bash
 HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-  "code": "VF",
-  "message": "Validation failed."
+  "code": "NT",
+  "message": "No exist ordercode."
+}
+```
+
+**응답 : 실패 (데이터베이스 에러)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "DBE",
+  "message": "Database error."
+}
+```
+
+***
+
+#### - 리뷰 불러오기 (본인)   
+  
+##### 설명
+
+작성한 평점, 리뷰내용을 불러옵니다.  
+성공적으로 이루어지면 성공에 대한 응답을 받습니다.  
+리뷰는 인증 없이도 볼 수 있습니다.   
+네트워크 에러, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : GET  
+- end point : /get-review-me  
+
+##### Request
+
+##### Header
+| name | description | required |
+|---|:---:|:---:|  
+| Authorization | Bearer 토큰 인증 헤더 | O |
+
+###### Example
+```bash
+curl -v -X GET "http://localhost:4000/api/v1/books/get-review" \
+ -h "Authorization=Bearer XXXX"
+ ```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 코드에 대한 설명 | O |
+| reviewRating | 평점 | Float | O |
+| reviewContents | 리뷰 내용 | String | X |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "SU",
+  "message": "Success."
 }
 ```
 
@@ -198,6 +266,17 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "NT",
   "message": "No exist ordercode."
+}
+```
+
+**응답 : 실패 (인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "AF",
+  "message": "Authentication fail."
 }
 ```
 
