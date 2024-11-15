@@ -1,6 +1,7 @@
 package com.study.bookstore.entity;
 
 import com.study.bookstore.dto.request.auth.SignUpRequestDto;
+import com.study.bookstore.dto.request.users.PatchUserRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,11 +27,17 @@ public class UsersEntity {
 	private String userEmail;
 	private String userPassword;
 	
-	// 데이터 삽입을 위한 생성자 (회원가입)
+	// 회원가입 시 데이터를 삽입하기 위한 생성자
 	public UsersEntity(SignUpRequestDto dto) {
 		this.userName = dto.getUserName();
 		this.userId = dto.getUserId();
 		this.userEmail = dto.getUserEmail();
 		this.userPassword = dto.getUserPassword();
 	}
+
+	// 회원 수정을 위한 생성자
+	public UsersEntity(PatchUserRequestDto dto) {
+		this.userName = dto.getUserName();
+		this.userEmail = dto.getUserEmail();
+	};
 }

@@ -120,7 +120,7 @@ Content-Type: application/json;charset=UTF-8
 네트워크 에러, 서버 에러, 인증 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : PATCH  
-- end point : /{userId}  
+- end point : /patch-info  
 
 ##### Request
 
