@@ -39,8 +39,8 @@ Books 모듈은 카테고리 조회 및 추천은 인증 없이 요청할 수 �
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| reviewRating | 평점 | Float | O |
-| reviewContents | 리뷰 내용 | String | X |
+| reviewRating | Float | 평점 | O |
+| reviewContents | String | 리뷰 내용 | X |
 
 ###### Example
 ```bash
@@ -163,10 +163,10 @@ curl -v -X GET "http://localhost:4000/api/v1/books/get-review" \
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
-| bookName | 책 이름 | String | O |
-| reviewRating | 평점 | Float | O |
-| reviewContent | 리뷰 내용 | String | X |
-| reviewDate | 리뷰 작성 날짜 | String | O |
+| bookName | String | 책 이름 | O |
+| reviewRating | Int | 평점 | O |
+| reviewContent | String | 리뷰 내용 | X |
+| reviewDate | String | 리뷰 작성 날짜 | O |
 
 ###### Example
 
@@ -258,10 +258,10 @@ curl -v -X GET "http://localhost:4000/api/v1/books/get-review" \
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
-| bookName | 책 이름 | String | O |
-| reviewRating | 평점 | Float | O |
-| reviewContent | 리뷰 내용 | String | X |
-| reviewDate | 리뷰 작성 날짜 | String | O |
+| bookName | String | 책 이름 | O |
+| reviewRating | Int | 평점 | O |
+| reviewContent | String | 리뷰 내용 | X |
+| reviewDate | String | 리뷰 작성 날짜 | O |
 
 ###### Example
 
@@ -349,8 +349,8 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| reviewRating | 평점 | Float | O |
-| reviewContents | 리뷰 내용 | String | X |
+| reviewRating | Int | 평점 | O |
+| reviewContent | String | 리뷰 내용 | X |
 
 ###### Example
 ```bash
