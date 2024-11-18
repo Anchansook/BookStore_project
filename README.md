@@ -27,7 +27,7 @@
 - <strong>Orders</strong>: 주문 정보 관리
 - <strong>Order_items</strong>: 주문 상품 목록 관리
 - <strong>Reviews</strong>: 리뷰 정보 관리
-<img width="905" alt="BookstoreERD" src="https://github.com/user-attachments/assets/91829c5c-6e9f-44d5-b205-7f6cadbf414d">
+<img width="913" alt="Bookstore_ERD" src="https://github.com/user-attachments/assets/4fc54169-3655-4d5c-9748-f4e22b2aa5d3">
 
 ## 🪩 API 명세서
 ### DOMAIN : http://localhost:4000
